@@ -42,10 +42,10 @@ Please use these versions:
 
 ```text
 >node --version
-v16.20.2
+v14.21.3
 
 >npm --version
-8.19.4
+6.14.18
 
 >yarn --version
 1.22.22
