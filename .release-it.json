@@ -31,8 +31,8 @@
     }
   },
   "git": {
-    "commitMessage": "release: release to v${version}",
-    "tagName": "v${version}"
+    "commitMessage": "release: release to v.fuddy-duddy-${version}",
+    "tagName": "v.fuddy-duddy-${version}"
   },
   "github": {
     "release": false
