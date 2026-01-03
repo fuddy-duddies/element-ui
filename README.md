@@ -32,6 +32,8 @@ Fuddy-duddy had made some changes from the original repository:
 
   This is for exporting the **theme**, and add a new default theme named `fuddy-duddy`.
 
+  The related files: `./build/bin/theme-chalk-server/`, I realized the theme feature just like the original repository, hope this can help users who want to export themes :).
+
 - Upgrade used packages
 
 - Add the support for the `.mjs` files(This is optional, copied from Lenovo internal project - "A11y Enhanced Element-UI")
