@@ -8,8 +8,12 @@
   "rules": {
     "no-restricted-globals": ["error", "event", "fdescribe"]
   },
+  "env": {
+    "node": true,
+    "es6": true
+  },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 8,
     "ecmaFeatures": {
       "jsx": true
     }
