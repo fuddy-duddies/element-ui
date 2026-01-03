@@ -102,7 +102,7 @@ if (langCriterion != null) {
     'utf-8'
   );
 
-  child_process.execSync(`.\\node_modules\\.bin\\tsc "${ targetLangSpecPath }" --declaration --emitDeclarationOnly --skipLibCheck --skipDefaultLibCheck --typeRoots "./node_modules/@types/*"`, {
+  child_process.execSync(`./node_modules/.bin/tsc "${ targetLangSpecPath }" --declaration --emitDeclarationOnly --skipLibCheck --skipDefaultLibCheck --typeRoots "./node_modules/@types/*"`, {
     encoding: 'utf-8',
     cwd: resolve(__dirname, '../../')
   });
