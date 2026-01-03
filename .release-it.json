@@ -31,13 +31,13 @@
     }
   },
   "git": {
-    "commitMessage": "release: release to v.fuddy-duddy-${version}",
-    "tagName": "v.fuddy-duddy-${version}"
+    "commitMessage": "release: release to v${version}",
+    "tagName": "v${version}"
   },
   "github": {
-    "release": true
+    "release": false
   },
   "hooks": {
-    "after:bump": "npm run build"
+    "after:bump": "npm run dist"
   }
 }
