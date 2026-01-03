@@ -8,7 +8,7 @@ const xhr = (method, url, data = null, cb) => {
     };
     xhr.open(method, url);
     xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.timeout = 10000;
+    xhr.timeout = 30000;
     if (cb) cb(xhr);
     xhr.onload = () => {
       if (xhr.readyState === 4) {

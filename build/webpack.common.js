@@ -61,11 +61,18 @@ module.exports = {
           limit: 10000,
           name: path.posix.join('static', '[name].[hash:7].[ext]')
         }
+      },
+      // See: https://github.com/vueuse/vue-demi/issues/171#issuecomment-2429383175
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
       }
     ]
   },
   plugins: [
     new ProgressBarPlugin(),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    config.fuddyDuddyEnhancement.getCommonWebpackBannerPlugin()
   ]
 };

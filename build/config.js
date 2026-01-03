@@ -1,7 +1,11 @@
 var path = require('path');
 var fs = require('fs');
+const dotenv = require('dotenv');
 var nodeExternals = require('webpack-node-externals');
 var Components = require('../components.json');
+const { getCommonWebpackBannerPlugin } = require('./utils');
+
+dotenv.config({ path: '.env' });
 
 var utilsList = fs.readdirSync(path.resolve(__dirname, '../src/utils'));
 var mixinsList = fs.readdirSync(path.resolve(__dirname, '../src/mixins'));
@@ -47,3 +51,13 @@ exports.vue = {
 };
 
 exports.jsexclude = /node_modules|utils\/popper\.js|utils\/date\.js|utils\/lodash\.js/;
+
+exports.fuddyDuddyEnhancement = {
+  terserKeepCommentsRegexp: /Fuddy-duddy a11y enhancement/,
+  getCommonWebpackBannerPlugin: getCommonWebpackBannerPlugin
+};
+
+exports.defines = {
+  FUDDY_DUDDY_THEME_CONFIG: process.env.FUDDY_DUDDY_THEME_CONFIG,
+  FUDDY_DUDDY_THEME_NAME: process.env.FUDDY_DUDDY_THEME_NAME
+};

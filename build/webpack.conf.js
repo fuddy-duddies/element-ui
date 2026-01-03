@@ -33,7 +33,7 @@ module.exports = {
       new TerserPlugin({
         terserOptions: {
           output: {
-            comments: false
+            comments: config.fuddyDuddyEnhancement.terserKeepCommentsRegexp
           }
         }
       })
@@ -61,11 +61,18 @@ module.exports = {
             preserveWhitespace: false
           }
         }
+      },
+      // See: https://github.com/vueuse/vue-demi/issues/171#issuecomment-2429383175
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
       }
     ]
   },
   plugins: [
     new ProgressBarPlugin(),
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+    config.fuddyDuddyEnhancement.getCommonWebpackBannerPlugin()
   ]
 };

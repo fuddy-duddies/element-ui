@@ -160,7 +160,7 @@ export default {
     },
     onAction() {
       this.onUserConfigUpdate(this.userConfig);
-      bus.$emit(ACTION_APPLY_THEME, this.userConfig);
+      bus.$emit(ACTION_APPLY_THEME, this.userConfig, this.previewConfig.name);
     },
     undo() {
       if (this.userConfigHistory.length > 0) {

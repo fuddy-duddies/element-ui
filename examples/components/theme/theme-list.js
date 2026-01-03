@@ -3,6 +3,11 @@ export const themeList = [
     name: 'Element',
     author: 'Element',
     theme: '{"global":{"$--color-primary":"#409EFF"},"local":{}}'
+  },
+  {
+    name: process.env.FUDDY_DUDDY_THEME_NAME,
+    author: 'eSupport',
+    theme: process.env.FUDDY_DUDDY_THEME_CONFIG
   }
 ];
 

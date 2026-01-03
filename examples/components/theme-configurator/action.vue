@@ -2,34 +2,33 @@
   <div class="configurator-action">
       <div class="action-group">
         <el-tooltip :content="getActionDisplayName('undo')">
-          <img 
+          <img
             src="../../assets/images/icon-undo.svg"
             @click="onUndo"
             :class="{ 'active': userConfigHistory.length > 0 }"
           />
         </el-tooltip>
         <el-tooltip :content="getActionDisplayName('redo')">
-          <img 
+          <img
             src="../../assets/images/icon-redo.svg"
             @click="onRedo"
             :class="{ 'active': userConfigRedoHistory.length > 0 }"
           />
         </el-tooltip>
         <div class="button-group">
-          <el-button 
+          <el-button
             class="reset"
-            type="primary" 
-            round 
+            round
             size="mini"
             :disabled="isOfficial"
             @click="onReset"
           >
             {{getActionDisplayName('reset-theme')}}
           </el-button>
-          <el-button 
+          <el-button
             class="download"
-            type="primary" 
-            round 
+            type="primary"
+            round
             size="mini"
             :disabled="downloadDisabled"
             @click="onDownload"
@@ -72,40 +71,14 @@
     }
     .button-group {
       float: right;
-      .el-button {
-        padding: 6px 15px;
-        &.is-disabled {
-          color: #C0C4CC;
-          background-color: #fff;
-          border-color: #EBEEF5;
-        }
-      }
-      .reset {
-        background: #E6F1FC;
-        color: #1989FA;
-        border-color: #A2CFFC;
-      }
-      .download {
-        background: #1989FA;
-        color: #FFF;
-        border-color: #1989FA
-      }
     }
   }
   .selector {
     width: 100%;
-    input {
-      background: #f5f7fa;
-      border: none;
-      font-size: 18px;
-      padding-left: 0;
-      color: #606266;
-    }
   }
   .line {
     width: 100%;
     height: 0;
-    border-bottom: 1px solid #DCDFE6;
   }
 }
 </style>

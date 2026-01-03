@@ -1,0 +1,19 @@
+{
+  "name": "Fuddy-duddy element ui",
+  "dockerComposeFile": "docker-compose.dev.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint"
+      ]
+    },
+    "settings": {
+      "python.pythonPath": "/usr/bin/python2.7"
+    }
+  },
+  "onCreateCommand": "yarn dev:install",
+  "postCreateCommand": "echo '\n🚀 Dev Container Ready! 🎉\n✨ Node.js environment is set up and ready to roll!\n📦 Dependencies installed successfully\n🌟 Happy coding! 🌟\n'",
+  "remoteUser": "node"
+}

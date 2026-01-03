@@ -1,0 +1,43 @@
+{
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "build",
+            "section": "Build System"
+          },
+          {
+            "type": "chore",
+            "section": "Regular Enhancements"
+          },
+          {
+            "type": "style",
+            "section": "Layout Enhancements"
+          }
+        ]
+      },
+      "header": "# Changelog",
+      "infile": "CHANGELOG.md"
+    }
+  },
+  "git": {
+    "commitMessage": "release: release to v.fuddy-duddy-${version}",
+    "tagName": "v.fuddy-duddy-${version}"
+  },
+  "github": {
+    "release": true
+  },
+  "hooks": {
+    "after:bump": "npm run build"
+  }
+}

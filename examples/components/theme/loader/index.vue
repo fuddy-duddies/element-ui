@@ -19,9 +19,9 @@ export default {
   mixins: [Loading, DocStyle],
   mounted() {
     this.checkLocalThemeConfig();
-    bus.$on(ACTION_APPLY_THEME, val => {
-      this.userConfig = val;
-      this.onAction();
+    bus.$on(ACTION_APPLY_THEME, (themeConfig, themeName) => {
+      this.userConfig = themeConfig;
+      this.onAction(themeName);
     });
     bus.$on(ACTION_DOWNLOAD_THEME, (themeConfig, themeName) => {
       this.onDownload(themeConfig, themeName);
@@ -44,6 +44,7 @@ export default {
     onDownload(themeConfig, themeName) {
       this.triggertProgressBar(true);
       updateVars(
+        themeName,
         Object.assign({}, themeConfig, { download: true }),
         xhr => {
           xhr.responseType = 'blob';
@@ -57,10 +58,10 @@ export default {
         });
       ga('send', 'event', 'ThemeConfigurator', 'Download', themeName);
     },
-    onAction() {
+    onAction(themeName) {
       this.triggertProgressBar(true);
       const time = +new Date();
-      updateVars(this.userConfig)
+      updateVars(themeName, this.userConfig)
         .then(res => {
           this.applyStyle(res, time);
         })
@@ -97,7 +98,7 @@ export default {
         const config = userConfig.filter(theme => (theme.name === previewConfig.name));
         if (config && config[0]) {
           this.userConfig = JSON.parse(config[0].theme);
-          this.onAction();
+          this.onAction(config[0].name);
         }
       }
     }

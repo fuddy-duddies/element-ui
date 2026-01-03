@@ -189,7 +189,7 @@ export default {
     const themeConfig = getThemeConfigObject(previewConfig.theme);
     if (themeConfig) {
       this.themeConfig = themeConfig;
-      bus.$emit(ACTION_APPLY_THEME, themeConfig);
+      bus.$emit(ACTION_APPLY_THEME, themeConfig, previewConfig.name);
     }
   }
 };

@@ -1,6 +1,6 @@
 {
-  "name": "element-ui",
-  "version": "2.15.14",
+  "name": "@fuddy-duddy/element-ui",
+  "version": "1.0.0",
   "description": "A Component Library for Vue.js.",
   "main": "lib/element-ui.common.js",
   "files": [
@@ -13,22 +13,26 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "bootstrap": "yarn || npm i",
-    "build:file": "node build/bin/iconInit.js & node build/bin/build-entry.js & node build/bin/i18n.js & node build/bin/version.js",
+    "build:file": "concurrently \"node build/bin/iconInit.js\" \"node build/bin/build-entry.js\" \"node build/bin/i18n.js\" \"node build/bin/version.js\"",
     "build:theme": "node build/bin/gen-cssfile && gulp build --gulpfile packages/theme-chalk/gulpfile.js && cp-cli packages/theme-chalk/lib lib/theme-chalk",
     "build:utils": "cross-env BABEL_ENV=utils babel src --out-dir lib --ignore src/index.js",
     "build:umd": "node build/bin/build-locale.js",
+    "build:theme:fuddy-duddy": "node build/bin/build-theme-fuddy-duddy.js",
     "clean": "rimraf lib && rimraf packages/*/lib && rimraf test/**/coverage",
     "deploy:build": "npm run build:file && cross-env NODE_ENV=production webpack --config build/webpack.demo.js && echo element.eleme.io>>examples/element-ui/CNAME",
     "deploy:extension": "cross-env NODE_ENV=production webpack --config build/webpack.extension.js",
     "dev:extension": "rimraf examples/extension/dist && cross-env NODE_ENV=development webpack --watch --config build/webpack.extension.js",
-    "dev": "npm run bootstrap && npm run build:file && cross-env NODE_ENV=development webpack-dev-server --config build/webpack.demo.js & node build/bin/template.js",
+    "dev": "npm run build:file && cross-env NODE_ENV=development concurrently \"webpack-dev-server --config build/webpack.demo.js\" \"node build/bin/template.js\" \"npm run dev:theme:server\"",
     "dev:play": "npm run build:file && cross-env NODE_ENV=development PLAY_ENV=true webpack-dev-server --config build/webpack.demo.js",
-    "dist": "npm run clean && npm run build:file && npm run lint && webpack --config build/webpack.conf.js && webpack --config build/webpack.common.js && webpack --config build/webpack.component.js && npm run build:utils && npm run build:umd && npm run build:theme",
+    "dev:theme:server": "nodemon --watch build/bin/theme-chalk-server build/bin/theme-chalk-server",
+    "dist": "npm run clean && npm run build:file && npm run lint && webpack --config build/webpack.conf.js && webpack --config build/webpack.common.js && webpack --config build/webpack.component.js && npm run build:utils && npm run build:umd && npm run build:theme && npm run build:theme:fuddy-duddy",
     "i18n": "node build/bin/i18n.js",
     "lint": "eslint src/**/* test/**/* packages/**/* build/**/* --quiet",
-    "pub": "npm run bootstrap && sh build/git-release.sh && sh build/release.sh && node build/bin/gen-indices.js",
+    "pub": "sh build/git-release.sh && sh build/release.sh && node build/bin/gen-indices.js",
     "test": "npm run lint && npm run build:theme && cross-env CI_ENV=/dev/ BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
-    "test:watch": "npm run build:theme && cross-env BABEL_ENV=test karma start test/unit/karma.conf.js"
+    "test:watch": "npm run build:theme && cross-env BABEL_ENV=test karma start test/unit/karma.conf.js",
+    "dev:install": "yarn install --prefer-offline --ignore-engines --registry=https://registry.npmjs.org/",
+    "release": "release-it --verbose --increment=patch"
   },
   "faas": [
     {
@@ -46,9 +50,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:ElemeFE/element.git"
+    "url": "git@github.com:fuddy-duddies/element-ui.git"
   },
-  "homepage": "http://element.eleme.io",
+  "engines": {
+    "node": ">=14"
+  },
+  "homepage": "https://element.eleme.io",
   "keywords": [
     "eleme",
     "vue",
@@ -56,7 +63,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ElemeFE/element/issues"
+    "url": "https://github.com/fuddy-duddies/element-ui/issues"
   },
   "unpkg": "lib/index.js",
   "style": "lib/theme-chalk/index.css",
@@ -65,6 +72,7 @@
     "async-validator": "~1.8.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.0",
     "deepmerge": "^1.2.0",
+    "dotenv": "^8.6.0",
     "normalize-wheel": "^1.0.1",
     "resize-observer-polyfill": "^1.5.0",
     "throttle-debounce": "^1.0.1"
@@ -73,6 +81,9 @@
     "vue": "^2.5.17"
   },
   "devDependencies": {
+    "@koa/bodyparser": "^6.0.0",
+    "@koa/router": "^14.0.0",
+    "@release-it/conventional-changelog": "^6.0.0",
     "@vue/component-compiler-utils": "^2.6.0",
     "algoliasearch": "^3.24.5",
     "babel-cli": "^6.26.0",
@@ -88,6 +99,7 @@
     "babel-regenerator-runtime": "^6.5.0",
     "chai": "^4.2.0",
     "chokidar": "^1.7.0",
+    "concurrently": "^8.2.2",
     "copy-webpack-plugin": "^5.0.0",
     "coveralls": "^3.0.3",
     "cp-cli": "^1.0.2",
@@ -101,10 +113,11 @@
     "eslint-plugin-json": "^1.2.0",
     "file-loader": "^1.1.11",
     "file-save": "^0.2.0",
+    "fs-extra": "^9.1.0",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-cssmin": "^0.2.0",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.1.0",
     "highlight.js": "^9.3.0",
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
@@ -117,6 +130,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "^0.0.32",
     "karma-webpack": "^3.0.5",
+    "koa": "^2.15.4",
     "launch-editor-middleware": "^2.3.0",
     "markdown-it": "^8.4.1",
     "markdown-it-anchor": "^5.0.2",
@@ -124,12 +138,15 @@
     "markdown-it-container": "^2.0.0",
     "mini-css-extract-plugin": "^0.4.1",
     "mocha": "^6.0.2",
-    "node-sass": "^4.11.0",
+    "node-sass": "^8.0.0",
+    "nodemon": "^2.0.20",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.14",
-    "progress-bar-webpack-plugin": "^1.11.0",
+    "progress-bar-webpack-plugin": "^1.12.1",
+    "release-it": "^15.11.0",
     "rimraf": "^2.5.4",
-    "sass-loader": "^7.1.0",
+    "sass-extract": "^3.0.0",
+    "sass-loader": "^10.5.2",
     "select-version-cli": "^0.0.2",
     "sinon": "^7.2.7",
     "sinon-chai": "^3.3.0",
@@ -143,9 +160,9 @@
     "vue-router": "^3.0.1",
     "vue-template-compiler": "2.5.21",
     "vue-template-es2015-compiler": "^1.6.0",
-    "webpack": "^4.14.0",
-    "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.11",
+    "webpack": "^4.47.0",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.11.3",
     "webpack-node-externals": "^1.7.2"
   }
 }

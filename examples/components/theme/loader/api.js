@@ -4,16 +4,16 @@ import { post, get } from './ajax';
 const { version } = Element;
 
 const hostList = {
-  local: 'http://localhost:3008/',
-  production: 'https://element-api.ele.me/element/theme/'
+  local: 'http://localhost:8086/api/',
+  production: 'http://localhost:8086/api/'
 };
 
 const host = hostList[process.env.FAAS_ENV] || hostList.production;
 
 export const getVars = () => {
-  return get(`${host}getVariable?version=${version}`);
+  return get(`${host}get-theme-variables?version=${version}`);
 };
 
-export const updateVars = (data, cb) => {
-  return post(`${host}updateVariable?version=${version}`, data, cb);
+export const updateVars = (themeName, data, cb) => {
+  return post(`${host}update-theme-variables?version=${version}&name=${themeName}`, data, cb);
 };

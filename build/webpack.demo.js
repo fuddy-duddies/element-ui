@@ -106,6 +106,12 @@ const webpackConfig = {
           limit: 10000,
           name: path.posix.join('static', '[name].[hash:7].[ext]')
         }
+      },
+      // See: https://github.com/vueuse/vue-demi/issues/171#issuecomment-2429383175
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
       }
     ]
   },
@@ -122,7 +128,14 @@ const webpackConfig = {
     new ProgressBarPlugin(),
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.FAAS_ENV': JSON.stringify(process.env.FAAS_ENV)
+      'process.env.FAAS_ENV': JSON.stringify(process.env.FAAS_ENV),
+      ...(
+        Object.keys(config.defines).reduce((acc, cur) => {
+          acc[`process.env.${ cur }`] = JSON.stringify(config.defines[cur]);
+
+          return acc;
+        }, {})
+      )
     }),
     new webpack.LoaderOptionsPlugin({
       vue: {
@@ -135,7 +148,7 @@ const webpackConfig = {
   optimization: {
     minimizer: []
   },
-  devtool: '#eval-source-map'
+  devtool: 'source-map'
 };
 
 if (isProd) {

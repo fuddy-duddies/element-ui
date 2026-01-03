@@ -13,7 +13,7 @@
           ></theme-configurator>
         </el-tab-pane>
         <el-tab-pane label="Gallery" name="gallery">
-          <gallery 
+          <gallery
             ref='gallery'
             :height="height"
             :width="width - 7"
@@ -128,7 +128,7 @@ export default {
         case 'edit':
           this.themeName = value.name;
           this.themeConfig = JSON.parse(value.theme);
-          bus.$emit(ACTION_APPLY_THEME, this.themeConfig);
+          bus.$emit(ACTION_APPLY_THEME, this.themeConfig, this.themeName);
           this.activeTab = 'config';
           break;
         default:
