@@ -15,9 +15,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-ENV http_proxy="http://10.38.34.162:3128"
-ENV https_proxy="http://10.38.34.162:3128"
-
 # Install pyenv
 ENV PYENV_ROOT="$HOME/.pyenv"
 ENV PATH="${PYENV_ROOT}/shims:${PYENV_ROOT}/bin:${PATH}"
